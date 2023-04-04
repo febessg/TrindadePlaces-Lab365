@@ -44,12 +44,12 @@ app.put('/places/:id', async (req, res) => {
         .json({message: 'Local não encontrado'})
     }
 
-    placeInDB.name = placeInDB.name;
+    placeInDB.name = req.body.name || placeInDB.name;
     placeInDB.contact = req.body.contact || placeInDB.contact;
     placeInDB.opening_hours = req.body.opening_hours || placeInDB.opening_hours;
     placeInDB.description = req.body.description || placeInDB.description;
-    placeInDB.latitude = placeInDB.latitude;
-    placeInDB.longitude = placeInDB.longitude;
+    placeInDB.latitude = req.body.latitude || placeInDB.latitude;
+    placeInDB.longitude = req.body.longitude || placeInDB.longitude;
 
     await placeInDB.save();
 
