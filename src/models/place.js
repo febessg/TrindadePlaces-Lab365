@@ -1,5 +1,5 @@
 //EX02 Criando modelo sequelize
-const { Sequelize } = require('sequelize');
+const Sequelize = require('sequelize');
 
 const connection = require('../database');
 
@@ -15,7 +15,7 @@ const Place = connection.define('places', {
         allowNull: false
     },
     contact: {
-        type: Sequelize.STRING(11),
+        type: Sequelize.STRING,
         allowNull: false
     },
     opening_hours: {
@@ -27,11 +27,11 @@ const Place = connection.define('places', {
         allowNull: true
     },
     latitude: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.DOUBLE,
         allowNull: false
     },
     longitude: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.DOUBLE,
         allowNull: false
     }
 });
