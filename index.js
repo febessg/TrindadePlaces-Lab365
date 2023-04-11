@@ -34,12 +34,31 @@ app.get('/places', async (req, res) => {
     res.json(places)
 });
 
+//EX05 - Criando rota DELETE
+app.delete('/places/:id', async (req, res) => {
+    const placeInDB = await Place.findByPk(req.params.id);
+
+    if (!placeInDB) {
+        return res
+        .status(404)
+        .json({message: 'Local não encontrado'})
+    };
+
+    await Place.destroy({
+        where: {
+            id: req.params.id
+        }
+    });
+
+    res.status(204);
+})
+
 //EX06 - Criando rota PUT
 app.put('/places/:id', async (req, res) => {
     const placeInDB = await Place.findByPk(req.params.id);
 
     if (!placeInDB) {
-        res
+       return res
         .status(404)
         .json({message: 'Local não encontrado'})
     }
@@ -54,8 +73,8 @@ app.put('/places/:id', async (req, res) => {
     await placeInDB.save();
 
     res.json(placeInDB);
-})
+});
 
 app.listen(3333, () => {
     console.log('Servidor Online')
-})
+});
