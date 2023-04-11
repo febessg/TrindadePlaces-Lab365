@@ -33,3 +33,5 @@ const User = connection.define('users', {
         }
     }
 });
+
+module.exports = User;

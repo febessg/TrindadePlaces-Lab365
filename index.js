@@ -9,6 +9,8 @@ const connection = require('./src/database');
 
 const Place = require('./src/models/place');
 
+const User = require('./src/models/user');
+
 connection.sync({alter:true});
 
 //EX03 - Criando rota POST
@@ -73,6 +75,20 @@ app.put('/places/:id', async (req, res) => {
     await placeInDB.save();
 
     res.json(placeInDB);
+});
+
+//[M1S10] Ex 02 - Criando rota POST para User
+app.post('/users', async (req, res) => {
+    const user = {
+        name: req.body.name,
+        email: req.body.email,
+        username: req.body.username,
+        password: req.body.password
+    }
+
+    const newUser = await User.create(user);
+
+    res.status(201).json(newUser)
 });
 
 app.listen(3333, () => {
