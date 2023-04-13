@@ -9,13 +9,14 @@ app.use(express.json());
 const connection = require('./src/database');
 
 const Place = require('./src/models/place');
-
 const User = require('./src/models/user');
+
+const validateToken = require('./src/middlewares/validateToken');
 
 connection.sync({alter:true});
 
 //EX03 - Criando rota POST
-app.post('/places', async (req, res) => {
+app.post('/places', validateToken, async (req, res) => {
     try {
         const place = {
         name: req.body.name,
@@ -36,7 +37,7 @@ app.post('/places', async (req, res) => {
 });
 
 //EX04 - Criando rota GET
-app.get('/places', async (req, res) => {
+app.get('/places', validateToken, async (req, res) => {
     try {
         const places = await Place.findAll()
 
@@ -48,7 +49,7 @@ app.get('/places', async (req, res) => {
 });
 
 //EX05 - Criando rota DELETE
-app.delete('/places/:id', async (req, res) => {
+app.delete('/places/:id', validateToken, async (req, res) => {
     try {
         const placeInDB = await Place.findByPk(req.params.id);
 
@@ -72,7 +73,7 @@ app.delete('/places/:id', async (req, res) => {
 })
 
 //EX06 - Criando rota PUT
-app.put('/places/:id', async (req, res) => {
+app.put('/places/:id', validateToken, async (req, res) => {
     try {
         const placeInDB = await Place.findByPk(req.params.id);
 
