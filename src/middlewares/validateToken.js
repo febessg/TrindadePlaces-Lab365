@@ -9,7 +9,7 @@ function validateToken(req, res, next) {
 
     const tokenJwt = token.slice(7);
 
-    jwt.verify(tokenJwt, 'PMX980312', (error, decoded) => {
+    jwt.verify(tokenJwt, process.env.CHAVE_DO_TOKEN, (error, decoded) => {
         if (error) {
             if (error.name === 'TokenExpiredError') {
                 return res.status(401).json({message: 'Token expirado'})
@@ -19,7 +19,7 @@ function validateToken(req, res, next) {
                 return res.status(500).json({message: 'Internal server error'})
             }
         } else {
-            req.userId = decoded.id;
+            req.body.userId = decoded.id;
             return next()
         };
     });
